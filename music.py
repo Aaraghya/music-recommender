@@ -4,7 +4,7 @@ import random
 # Page config
 st.set_page_config(page_title="🎶 MelodyMood 💖", page_icon="🎧", layout="centered")
 
-# CSS for cute preppy theme
+# CSS for cute preppy theme with black text in cards and quotes
 st.markdown("""
 <style>
 body {background-color: #F4C2C2; color: #000000; font-family: 'Fredoka One', cursive;}
@@ -18,8 +18,8 @@ body {background-color: #F4C2C2; color: #000000; font-family: 'Fredoka One', cur
     font-size: 16px;
 }
 .stButton>button:hover {background-color: #FF85C1; color: #fff;}
-.card {background-color: #fff0f5; padding: 15px; border-radius: 12px; margin-bottom: 10px;}
-.quote {background-color: #ffe4e1; padding: 12px; border-radius: 12px; margin-bottom: 10px; font-style: italic;}
+.card {background-color: #fff0f5; padding: 15px; border-radius: 12px; margin-bottom: 10px; color: #000000;}
+.quote {background-color: #ffe4e1; padding: 12px; border-radius: 12px; margin-bottom: 10px; font-style: italic; color: #000000;}
 .dark-mode {background-color: #4B0082; color: #E6E6FA;}
 </style>
 """, unsafe_allow_html=True)
@@ -31,7 +31,7 @@ st.write("Select your mood and get a personalized music track or inspirational q
 # Mood options
 moods = ["Happy 😄", "Sad 😢", "Stressed 😌", "Motivated ⚡", "Sleepy 🥱", "Excited 🥳"]
 
-# Recommendations: music + quotes for all moods
+# Recommendations dictionary
 recommendations = {
     "Happy 😄": [
         {"type": "Music", "content": "'Happy' by Pharrell Williams 🎵"},
@@ -80,7 +80,7 @@ recommendations = {
 # Mood selector
 selected_mood = st.selectbox("Select your current mood:", moods)
 
-# Get random recommendation for a mood safely
+# Get random recommendation safely
 def get_rec(mood, r_type=None):
     mood_options = recommendations.get(mood, [])
     options = [r for r in mood_options if (r_type is None or r['type'] == r_type)]
@@ -98,7 +98,7 @@ if st.button("Get Quote 💖"):
     q = get_rec(selected_mood, "Quote")
     st.markdown(f'<div class="quote">💌 **Quote:** {q["content"]}</div>', unsafe_allow_html=True)
 
-# Surprise Me (mood-relevant + emojis)
+# Surprise Me
 if st.button("Surprise Me! ✨🎶"):
     r_type = random.choice(["Music", "Quote"])
     surprise = get_rec(selected_mood, r_type)
