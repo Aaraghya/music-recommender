@@ -31,61 +31,61 @@ st.write("Select your mood and get a personalized music track or inspirational q
 # Mood options
 moods = ["Happy 😄", "Sad 😢", "Stressed 😌", "Motivated ⚡", "Sleepy 🥱", "Excited 🥳"]
 
-# Recommendations: 10 each
+# Recommendations: music + quotes for all moods
 recommendations = {
     "Happy 😄": [
         {"type": "Music", "content": "'Happy' by Pharrell Williams 🎵"},
         {"type": "Music", "content": "'Good Day' by Nappy Roots 🎶"},
         {"type": "Music", "content": "'Can't Stop the Feeling' by Justin Timberlake 💖"},
         {"type": "Music", "content": "'Shake It Off' by Taylor Swift 🪩"},
-        {"type": "Music", "content": "'Uptown Funk' by Mark Ronson ft. Bruno Mars 🎧"},
-        {"type": "Music", "content": "'Dynamite' by BTS ✨"},
-        {"type": "Music", "content": "'Best Day of My Life' by American Authors 🎵"},
-        {"type": "Music", "content": "'Walking on Sunshine' by Katrina & The Waves 🌞"},
-        {"type": "Music", "content": "'Roar' by Katy Perry 🐯"},
-        {"type": "Music", "content": "'Firework' by Katy Perry 🎆"},
         {"type": "Quote", "content": "'Happiness is not something ready made. It comes from your own actions.' – Dalai Lama 💕"},
-        {"type": "Quote", "content": "'The purpose of our lives is to be happy.' – Dalai Lama 🌸"},
-        {"type": "Quote", "content": "'Happiness depends upon ourselves.' – Aristotle ✨"},
         {"type": "Quote", "content": "'Do more of what makes you happy! 😄'"},
-        {"type": "Quote", "content": "'Smiles are contagious 😍'"},
-        {"type": "Quote", "content": "'Joy is a net of love by which you can catch souls.' – Mother Teresa 🌈"},
-        {"type": "Quote", "content": "'The best way to cheer yourself up is to try to cheer somebody else up! 💖'"},
-        {"type": "Quote", "content": "'Happiness held is the seed; happiness shared is the flower 🌸'"},
-        {"type": "Quote", "content": "'Life is short, smile while you still have teeth 😆'"}
     ],
-    # Repeat similar structure for other moods with 10+ music + quotes each
     "Sad 😢": [
         {"type": "Music", "content": "'Fix You' by Coldplay 💔"},
         {"type": "Music", "content": "'Someone Like You' by Adele 😢"},
         {"type": "Music", "content": "'Lost Cause' by Billie Eilish 🌧️"},
-        {"type": "Music", "content": "'All I Want' by Kodaline 💙"},
-        {"type": "Music", "content": "'Stay With Me' by Sam Smith 💔"},
-        {"type": "Music", "content": "'Skinny Love' by Bon Iver 🥀"},
-        {"type": "Music", "content": "'When We Were Young' by Adele 🎵"},
-        {"type": "Music", "content": "'Let Her Go' by Passenger 🎶"},
-        {"type": "Music", "content": "'I Will Follow You Into The Dark' by Death Cab 💫"},
-        {"type": "Music", "content": "'The Night We Met' by Lord Huron 🌌"},
         {"type": "Quote", "content": "'Tough times never last, but tough people do.' – Robert H. Schuller 🌙"},
-        {"type": "Quote", "content": "'Sadness flies away on the wings of time.' – Jean de La Fontaine 🕊️"},
-        {"type": "Quote", "content": "'Every human walks around with a certain kind of sadness.' – Brad Pitt 💔"},
-        {"type": "Quote", "content": "'Tears come from the heart and not from the brain 😢'"},
         {"type": "Quote", "content": "'Even the darkest night will end and the sun will rise 🌅'"},
-        {"type": "Quote", "content": "'It's okay to not be okay 🌸'"},
-        {"type": "Quote", "content": "'You cannot protect yourself from sadness without protecting yourself from happiness 😌'"},
-        {"type": "Quote", "content": "'Sadness is but a wall between two gardens 💜'"},
-        {"type": "Quote", "content": "'Your sadness is a gift, not a curse 🎁'"},
-        {"type": "Quote", "content": "'Sometimes you have to let yourself feel 💫'"}
     ],
-    # Continue for Stressed, Motivated, Sleepy, Excited…
+    "Stressed 😌": [
+        {"type": "Music", "content": "'Weightless' by Marconi Union 💤"},
+        {"type": "Music", "content": "'Clair de Lune' by Debussy 🎹"},
+        {"type": "Quote", "content": "'Keep calm and carry on 😌'"},
+        {"type": "Quote", "content": "'Stress is caused by being 'here' but wanting to be 'there'. – Eckhart Tolle 🌸'"},
+    ],
+    "Motivated ⚡": [
+        {"type": "Music", "content": "'Eye of the Tiger' by Survivor 💪"},
+        {"type": "Music", "content": "'Stronger' by Kanye West ⚡"},
+        {"type": "Music", "content": "'Don't Stop Me Now' by Queen 🎶"},
+        {"type": "Quote", "content": "'The harder you work for something, the greater you’ll feel when you achieve it 💖'"},
+        {"type": "Quote", "content": "'Push yourself, because no one else is going to do it for you 🌟'"},
+    ],
+    "Sleepy 🥱": [
+        {"type": "Music", "content": "'Weightless' by Marconi Union 💤"},
+        {"type": "Music", "content": "'Lullaby' by Johannes Brahms 🎵"},
+        {"type": "Music", "content": "'Night Owl' by Galimatias 🌙"},
+        {"type": "Quote", "content": "'Sleep is the best meditation. – Dalai Lama 😴'"},
+        {"type": "Quote", "content": "'Rest and recharge, tomorrow is a new day 🌸'"},
+    ],
+    "Excited 🥳": [
+        {"type": "Music", "content": "'Happy' by Pharrell Williams 🎵"},
+        {"type": "Music", "content": "'Can’t Stop the Feeling!' by Justin Timberlake 💖"},
+        {"type": "Music", "content": "'I Gotta Feeling' by Black Eyed Peas 🎶"},
+        {"type": "Quote", "content": "'Excitement is the energy that propels us forward! ⚡'"},
+        {"type": "Quote", "content": "'Celebrate every little victory 🥳'"},
+    ]
 }
 
 # Mood selector
 selected_mood = st.selectbox("Select your current mood:", moods)
 
-# Get random recommendation for a mood
+# Get random recommendation for a mood safely
 def get_rec(mood, r_type=None):
-    options = [r for r in recommendations[mood] if (r_type is None or r['type']==r_type)]
+    mood_options = recommendations.get(mood, [])
+    options = [r for r in mood_options if (r_type is None or r['type'] == r_type)]
+    if not options:
+        return {"type": r_type or "Music", "content": "No recommendation available for this mood yet! 😅"}
     return random.choice(options)
 
 # Music Recommendation
