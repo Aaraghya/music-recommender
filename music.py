@@ -80,7 +80,7 @@ recommendations = {
 # Mood selector
 selected_mood = st.selectbox("Select your current mood:", moods)
 
-# Get random recommendation safely
+# Safe get_rec function
 def get_rec(mood, r_type=None):
     mood_options = recommendations.get(mood, [])
     options = [r for r in mood_options if (r_type is None or r['type'] == r_type)]
@@ -91,18 +91,18 @@ def get_rec(mood, r_type=None):
 # Music Recommendation
 if st.button("Get Music Recommendation 🎧"):
     r = get_rec(selected_mood, "Music")
-    st.markdown(f'<div class="card">🎵 **Music:** {r["content"]}</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="card">🎵 Music: {r["content"]}</div>', unsafe_allow_html=True)
 
 # Quote Recommendation
 if st.button("Get Quote 💖"):
     q = get_rec(selected_mood, "Quote")
-    st.markdown(f'<div class="quote">💌 **Quote:** {q["content"]}</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="quote">💌 Quote: {q["content"]}</div>', unsafe_allow_html=True)
 
 # Surprise Me
 if st.button("Surprise Me! ✨🎶"):
     r_type = random.choice(["Music", "Quote"])
     surprise = get_rec(selected_mood, r_type)
-    st.markdown(f'<div class="card">🌈 **Mood:** {selected_mood}</div>', unsafe_allow_html=True)
-    st.markdown(f'<div class="card">💖 **{r_type}:** {surprise["content"]}</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="card">🌈 Mood: {selected_mood}</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="card">💖 {r_type}: {surprise["content"]}</div>', unsafe_allow_html=True)
 
 st.markdown('</div>', unsafe_allow_html=True)
